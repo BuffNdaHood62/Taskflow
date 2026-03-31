@@ -1,0 +1,210 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+@import "tailwindcss";
+
+/* ===== DESIGN TOKENS ===== */
+:root {
+  /* Light Theme */
+  --bg-primary: #FAFAFA;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #F5F5F7;
+  --bg-elevated: #FFFFFF;
+  --bg-hover: rgba(0, 0, 0, 0.03);
+  --bg-active: rgba(99, 102, 241, 0.08);
+
+  --text-primary: #111111;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+
+  --border-default: #E5E7EB;
+  --border-hover: #D1D5DB;
+  --border-focus: rgba(99, 102, 241, 0.5);
+
+  --brand: #6366F1;
+  --brand-hover: #4F46E5;
+  --brand-light: rgba(99, 102, 241, 0.1);
+
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #F43F5E;
+  --info: #0EA5E9;
+
+  --shadow-subtle: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-default: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-medium: 0 4px 16px rgba(0,0,0,0.12);
+  --shadow-large: 0 8px 32px rgba(0,0,0,0.16);
+  --shadow-glow: 0 0 20px rgba(99,102,241,0.15);
+
+  --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0A0A0F;
+  --bg-secondary: #12121A;
+  --bg-tertiary: #1A1A2E;
+  --bg-elevated: #222238;
+  --bg-hover: rgba(255, 255, 255, 0.04);
+  --bg-active: rgba(99, 102, 241, 0.12);
+
+  --text-primary: #F1F1F3;
+  --text-secondary: #8888A0;
+  --text-muted: #55556A;
+
+  --border-default: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+  --border-focus: rgba(99, 102, 241, 0.5);
+
+  --brand: #6366F1;
+  --brand-hover: #818CF8;
+  --brand-light: rgba(99, 102, 241, 0.15);
+
+  --shadow-subtle: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-default: 0 2px 8px rgba(0,0,0,0.4);
+  --shadow-medium: 0 4px 16px rgba(0,0,0,0.5);
+  --shadow-large: 0 8px 32px rgba(0,0,0,0.6);
+  --shadow-glow: 0 0 20px rgba(99,102,241,0.25);
+}
+
+/* ===== BASE STYLES ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+::selection {
+  background: rgba(99, 102, 241, 0.3);
+  color: inherit;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ===== TYPE SCALE ===== */
+.text-display { font-family: var(--font-heading); font-size: 36px; line-height: 40px; letter-spacing: -0.02em; font-weight: 700; }
+.text-h1 { font-family: var(--font-heading); font-size: 30px; line-height: 36px; letter-spacing: -0.02em; font-weight: 700; }
+.text-h2 { font-family: var(--font-heading); font-size: 24px; line-height: 32px; letter-spacing: -0.01em; font-weight: 600; }
+.text-h3 { font-family: var(--font-heading); font-size: 20px; line-height: 28px; font-weight: 600; }
+.text-h4 { font-family: var(--font-heading); font-size: 16px; line-height: 24px; font-weight: 600; }
+.text-body { font-size: 14px; line-height: 20px; }
+.text-small { font-size: 13px; line-height: 18px; }
+.text-caption { font-size: 12px; line-height: 16px; }
+.text-overline { font-size: 11px; line-height: 16px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+.text-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* ===== GLASS EFFECTS ===== */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-default);
+}
+
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.glass-heavy {
+  background: rgba(18, 18, 26, 0.95);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] .glass-heavy {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--border-default);
+}
+
+/* ===== GRADIENT DIVIDERS ===== */
+.divider-gradient {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-fadeIn { animation: fadeIn 0.3s ease-out; }
+.animate-slideInRight { animation: slideInRight 0.3s ease-out; }
+.animate-scaleIn { animation: scaleIn 0.2s ease-out; }
+
+/* ===== FOCUS STYLES ===== */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* ===== INTERACTIVE ===== */
+.interactive {
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.interactive:hover {
+  background: var(--bg-hover);
+}
+
+.interactive:active {
+  transform: scale(0.98);
+}
+
+/* ===== BACKGROUND PATTERNS ===== */
+.bg-dots {
+  background-image: radial-gradient(circle, var(--border-default) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.3;
+}
+
+/* Priority left border */
+.priority-border {
+  border-left: 3px solid transparent;
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
