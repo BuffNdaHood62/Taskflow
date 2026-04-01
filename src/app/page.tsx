@@ -12,8 +12,23 @@ import BoardView from '@/components/tasks/BoardView';
 import CalendarView from '@/components/tasks/CalendarView';
 import CommandPalette from '@/components/ui/CommandPalette';
 
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < breakpoint);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, [breakpoint]);
+
+  return isMobile;
+}
+
 export default function Home() {
+  const isMobile = useIsMobile();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState('today');
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [tasks, setTasks] = useState<Task[]>(mockTasks);
@@ -22,6 +37,13 @@ export default function Home() {
 
   const activeTasks = tasks.filter(t => !t.completed);
   const completedTasks = tasks.filter(t => t.completed);
+
+  // Close mobile menu on resize to desktop
+  useEffect(() => {
+    if (!isMobile && mobileMenuOpen) {
+      setMobileMenuOpen(false);
+    }
+  }, [isMobile, mobileMenuOpen]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -32,7 +54,11 @@ export default function Home() {
       }
       if ((e.metaKey || e.ctrlKey) && e.key === 'b') {
         e.preventDefault();
-        setSidebarCollapsed(prev => !prev);
+        if (isMobile) {
+          setMobileMenuOpen(prev => !prev);
+        } else {
+          setSidebarCollapsed(prev => !prev);
+        }
       }
       if ((e.metaKey || e.ctrlKey) && e.key === '1') { e.preventDefault(); setViewMode('list'); }
       if ((e.metaKey || e.ctrlKey) && e.key === '2') { e.preventDefault(); setViewMode('board'); }
@@ -40,7 +66,7 @@ export default function Home() {
     };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
-  }, []);
+  }, [isMobile]);
 
   const handleToggleComplete = useCallback((id: string) => {
     setTasks(prev => prev.map(t =>
@@ -83,6 +109,11 @@ export default function Home() {
     setSelectedTask(task);
   }, []);
 
+  const handleNavChange = useCallback((id: string) => {
+    setActiveNav(id);
+    if (isMobile) setMobileMenuOpen(false);
+  }, [isMobile]);
+
   const getTitle = () => {
     switch (activeNav) {
       case 'inbox': return 'Inbox';
@@ -95,18 +126,36 @@ export default function Home() {
 
   return (
     <div className="flex h-screen overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
+      {/* Mobile sidebar overlay */}
+      {isMobile && mobileMenuOpen && (
+        <div
+          className="mobile-sidebar-overlay active"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
       <Sidebar
-        collapsed={sidebarCollapsed}
-        onToggle={() => setSidebarCollapsed(prev => !prev)}
+        collapsed={isMobile ? false : sidebarCollapsed}
+        onToggle={() => {
+          if (isMobile) {
+            setMobileMenuOpen(false);
+          } else {
+            setSidebarCollapsed(prev => !prev);
+          }
+        }}
         activeNav={activeNav}
-        onNavChange={setActiveNav}
+        onNavChange={handleNavChange}
         onOpenCommandPalette={() => setCommandPaletteOpen(true)}
+        isMobile={isMobile}
+        mobileOpen={mobileMenuOpen}
       />
 
       {/* Main Content */}
       <main
         className={cn('flex-1 flex flex-col transition-all duration-300 ease-in-out')}
-        style={{ marginLeft: sidebarCollapsed ? '68px' : '260px' }}
+        style={{
+          marginLeft: isMobile ? '0' : (sidebarCollapsed ? '68px' : '260px'),
+        }}
       >
         <TopHeader
           title={getTitle()}
@@ -114,6 +163,8 @@ export default function Home() {
           onViewModeChange={setViewMode}
           taskCount={activeTasks.length}
           completedCount={completedTasks.length}
+          onMenuToggle={() => setMobileMenuOpen(true)}
+          isMobile={isMobile}
         />
 
         {/* Background pattern */}

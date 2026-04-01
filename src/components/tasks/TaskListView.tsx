@@ -61,33 +61,33 @@ export default function TaskListView({ tasks, onToggleComplete, onTaskClick, onA
   ];
 
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-4" style={{ maxHeight: 'calc(100vh - 56px)' }}>
+    <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-4" style={{ maxHeight: 'calc(100vh - 56px)' }}>
       {/* Add task */}
       <div className="mb-4">
         {addingTask ? (
-          <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-[var(--border-focus)] bg-[var(--bg-tertiary)] animate-fadeIn">
-            <div className="w-[18px] h-[18px] rounded-full border-2 border-[var(--border-hover)] flex-shrink-0" />
+          <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-(--border-focus) bg-(--bg-tertiary) animate-fadeIn">
+            <div className="w-4.5 h-4.5 rounded-full border-2 border-(--border-hover) shrink-0" />
             <input
               autoFocus
               value={newTaskTitle}
               onChange={e => setNewTaskTitle(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter') handleAddTask(); if (e.key === 'Escape') { setAddingTask(false); setNewTaskTitle(''); } }}
               placeholder="Task name"
-              className="flex-1 bg-transparent outline-none text-body text-[var(--text-primary)] placeholder:text-[var(--text-muted)]"
+              className="flex-1 bg-transparent outline-none text-body text-(--text-primary) placeholder:text-(--text-muted)"
             />
             <button onClick={handleAddTask} className="px-3 h-7 rounded-lg text-caption font-medium text-white transition-colors" style={{ background: 'var(--brand)' }}>
               Add
             </button>
-            <button onClick={() => { setAddingTask(false); setNewTaskTitle(''); }} className="px-3 h-7 rounded-lg text-caption font-medium text-[var(--text-muted)] hover:bg-[var(--bg-hover)] transition-colors">
+            <button onClick={() => { setAddingTask(false); setNewTaskTitle(''); }} className="px-3 h-7 rounded-lg text-caption font-medium text-(--text-muted) hover:bg-(--bg-hover) transition-colors">
               Cancel
             </button>
           </div>
         ) : (
           <button
             onClick={() => setAddingTask(true)}
-            className="flex items-center gap-2 px-4 py-2 text-small text-[var(--text-muted)] hover:text-[var(--brand)] transition-colors group w-full rounded-xl hover:bg-[var(--bg-hover)]"
+            className="flex items-center gap-2 px-4 py-2 text-small text-(--text-muted) hover:text-(--brand) transition-colors group w-full rounded-xl hover:bg-(--bg-hover)"
           >
-            <Plus size={16} className="text-[var(--brand)]" />
+            <Plus size={16} className="text-(--brand)" />
             <span>Add task</span>
           </button>
         )}
@@ -102,9 +102,9 @@ export default function TaskListView({ tasks, onToggleComplete, onTaskClick, onA
               onClick={() => toggleSection(section.id)}
               className="flex items-center gap-2 px-2 py-1.5 w-full text-left group mb-1"
             >
-              {isCollapsed ? <ChevronRight size={16} className="text-[var(--text-muted)]" /> : <ChevronDown size={16} className="text-[var(--text-muted)]" />}
+              {isCollapsed ? <ChevronRight size={16} className="text-(--text-muted)" /> : <ChevronDown size={16} className="text-(--text-muted)" />}
               <span className="text-small font-semibold" style={{ color: section.accentColor }}>{section.title}</span>
-              <span className="text-caption text-mono text-[var(--text-muted)]">{section.tasks.length}</span>
+              <span className="text-caption text-mono text-(--text-muted)">{section.tasks.length}</span>
             </button>
             {!isCollapsed && (
               <div className="space-y-0.5">
@@ -124,10 +124,10 @@ export default function TaskListView({ tasks, onToggleComplete, onTaskClick, onA
             onClick={() => setShowCompleted(!showCompleted)}
             className="flex items-center gap-2 px-2 py-1.5 w-full text-left mb-1"
           >
-            {showCompleted ? <ChevronDown size={16} className="text-[var(--text-muted)]" /> : <ChevronRight size={16} className="text-[var(--text-muted)]" />}
-            <CheckCircle2 size={16} className="text-[var(--success)]" />
-            <span className="text-small font-semibold text-[var(--text-muted)]">Completed</span>
-            <span className="text-caption text-mono text-[var(--text-muted)]">{completedTasks.length}</span>
+            {showCompleted ? <ChevronDown size={16} className="text-(--text-muted)" /> : <ChevronRight size={16} className="text-(--text-muted)" />}
+            <CheckCircle2 size={16} className="text-(--success)" />
+            <span className="text-small font-semibold text-(--text-muted)">Completed</span>
+            <span className="text-caption text-mono text-(--text-muted)">{completedTasks.length}</span>
           </button>
           {showCompleted && (
             <div className="space-y-0.5">
@@ -142,11 +142,11 @@ export default function TaskListView({ tasks, onToggleComplete, onTaskClick, onA
       {/* Empty State */}
       {activeTasks.length === 0 && completedTasks.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 text-center animate-fadeIn">
-          <div className="w-16 h-16 rounded-2xl bg-[var(--brand-light)] flex items-center justify-center mb-4">
-            <CheckCircle2 size={32} className="text-[var(--brand)]" />
+          <div className="w-16 h-16 rounded-2xl bg-(--brand-light) flex items-center justify-center mb-4">
+            <CheckCircle2 size={32} className="text-(--brand)" />
           </div>
-          <h3 className="text-h3 text-[var(--text-primary)] mb-2">No tasks yet</h3>
-          <p className="text-body text-[var(--text-muted)] mb-4">Create your first task to get started</p>
+          <h3 className="text-h3 text-(--text-primary) mb-2">No tasks yet</h3>
+          <p className="text-body text-(--text-muted) mb-4">Create your first task to get started</p>
           <button
             onClick={() => setAddingTask(true)}
             className="px-4 h-9 rounded-lg text-small font-medium text-white transition-all hover:opacity-90"

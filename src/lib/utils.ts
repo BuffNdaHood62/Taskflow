@@ -20,7 +20,7 @@ export function formatRelativeDate(date: Date): string {
 }
 
 export function getDueDateColor(date: Date | undefined): string {
-  if (!date) return 'text-[var(--text-muted)]';
+  if (!date) return 'text-(--text-muted)';
   const now = new Date();
   now.setHours(0, 0, 0, 0);
   const d = new Date(date);
@@ -28,7 +28,7 @@ export function getDueDateColor(date: Date | undefined): string {
 
   if (d < now) return 'text-red-400';
   if (d.getTime() === now.getTime()) return 'text-amber-400';
-  return 'text-[var(--text-secondary)]';
+  return 'text-(--text-secondary)';
 }
 
 export const priorityConfig = {

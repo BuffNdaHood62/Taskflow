@@ -154,6 +154,11 @@ body {
   to { transform: translateX(0); opacity: 1; }
 }
 
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
 @keyframes scaleIn {
   from { transform: scale(0.95); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
@@ -166,6 +171,7 @@ body {
 
 .animate-fadeIn { animation: fadeIn 0.3s ease-out; }
 .animate-slideInRight { animation: slideInRight 0.3s ease-out; }
+.animate-slideInLeft { animation: slideInLeft 0.25s ease-out; }
 .animate-scaleIn { animation: scaleIn 0.2s ease-out; }
 
 /* ===== FOCUS STYLES ===== */
@@ -206,5 +212,49 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+
+/* Mobile overlay for sidebar backdrop */
+.mobile-sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 25;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.mobile-sidebar-overlay.active {
+  display: block;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* Small screens (phones) */
+@media (max-width: 768px) {
+  body {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .text-display { font-size: 28px; line-height: 34px; }
+  .text-h1 { font-size: 24px; line-height: 30px; }
+  .text-h2 { font-size: 20px; line-height: 26px; }
+  .text-h3 { font-size: 17px; line-height: 24px; }
+}
+
+/* Touch-friendly targets */
+@media (pointer: coarse) {
+  button, [role="button"], a {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
