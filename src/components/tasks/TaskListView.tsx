@@ -61,7 +61,7 @@ export default function TaskListView({ tasks, onToggleComplete, onTaskClick, onA
   ];
 
   return (
-    <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-4" style={{ maxHeight: 'calc(100vh - 56px)' }}>
+    <div className="flex-1 overflow-y-auto overflow-x-hidden px-3 sm:px-6 py-4 max-w-full" style={{ maxHeight: 'calc(100vh - 56px)' }}>
       {/* Add task */}
       <div className="mb-4">
         {addingTask ? (

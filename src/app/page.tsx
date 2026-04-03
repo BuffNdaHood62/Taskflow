@@ -125,7 +125,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
+    <div className="flex h-screen overflow-hidden max-w-full" style={{ background: 'var(--bg-primary)' }}>
       {/* Mobile sidebar overlay */}
       {isMobile && mobileMenuOpen && (
         <div
@@ -152,7 +152,7 @@ export default function Home() {
 
       {/* Main Content */}
       <main
-        className={cn('flex-1 flex flex-col transition-all duration-300 ease-in-out')}
+        className={cn('flex-1 flex flex-col transition-all duration-300 ease-in-out min-w-0 overflow-x-hidden max-w-full')}
         style={{
           marginLeft: isMobile ? '0' : (sidebarCollapsed ? '68px' : '260px'),
         }}
@@ -171,7 +171,7 @@ export default function Home() {
         <div className="absolute inset-0 pointer-events-none bg-dots" style={{ zIndex: 0 }} />
 
         {/* View content */}
-        <div className="relative z-10">
+        <div className="relative z-10 overflow-x-hidden">
           {viewMode === 'list' && (
             <TaskListView
               tasks={tasks}
